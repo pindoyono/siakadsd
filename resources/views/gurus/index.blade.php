@@ -71,5 +71,7 @@
                 $("#delete-form").submit();
             }
         }
+
+
     </script>
 @endpush

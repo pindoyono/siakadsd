@@ -33,9 +33,22 @@
                         @error('password') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword">Konfirmasi Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Konfirmasi Password" name="password_confirmation">
+                        <label for="exampleInputPassword">Tempat Lahir</label>
+                        <input type="text" class="form-control" id="exampleInputPassword" placeholder="Konfirmasi Password" name="tempat_lahir">
                     </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword">Tanggal Lahir</label>
+                        <input type="text" class="form-control" id="exampleInputPassword" placeholder="Konfirmasi Password" name="tanggal_lahir">
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                          <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                              <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                              <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              </div>
+                          </div>
+                      </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -47,3 +60,10 @@
         </div>
     </div>
 @stop
+
+<script>
+
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+</script>
