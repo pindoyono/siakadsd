@@ -107,7 +107,7 @@ class SiswaController extends Controller
     {
         //
         $request->validate([
-            'Nama' => 'required',
+            'nama' => 'required',
             'jenis_kelamin' => 'required',
             'tempat_lahir'  => 'required',
             'agama' => 'required',
@@ -116,7 +116,7 @@ class SiswaController extends Controller
         ]);
         $siswa->update($request->all());
 
-        return redirect()->route('siwas.index')
+        return redirect()->route('siswas.index')
                         ->with('success_message','Data Siswa Berhasi Di Ubah');
     }
 
@@ -131,7 +131,7 @@ class SiswaController extends Controller
         //
         $siswa->delete();
 
-        return redirect()->route('siswa.index')
+        return redirect()->route('siswas.index')
                         ->with('success_message','Data Siswa Berhasi Di Hapus');
     }
 }

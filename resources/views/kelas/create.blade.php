@@ -1,11 +1,10 @@
 @extends('adminlte::page')
-@section('title', 'Edit User')
+@section('title', 'Tambah User')
 @section('content_header')
-    <h1 class="m-0 text-dark">Edit Guru</h1>
+    <h1 class="m-0 text-dark">Tambah Guru</h1>
 @stop
 @section('content')
-    <form action="{{route('gurus.update', $guru)}}" method="post">
-        @method('PUT')
+    <form action="{{route('siswas.store')}}" method="post">
         @csrf
     <div class="row">
         <div class="col-12">
@@ -13,68 +12,74 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputName">Nama</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputName" placeholder="Nama lengkap" name="Nama" value="{{$guru->Nama ?? old('Nama')}}">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputName" placeholder="Nama lengkap" name="nama" value="{{old('name')}}">
                         @error('name') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail">Email address</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail" placeholder="Masukkan Email" name="email" value="{{$guru->email ?? old('email')}}">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail" placeholder="Masukkan Email" name="email" value="{{old('email')}}">
                         @error('email') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword">Jenis Kelamin</label>
                             <div class="form-check">
-                                <input class="form-check-input"  {{ $guru->jenis_kelamin=='Laki-Laki' ? "checked" : "" }}  @error('jenis_kelamin') is-invalid @enderror" value="Laki-Laki"  type="radio" name="jenis_kelamin">
+                                <input class="form-check-input"  @error('jenis_kelamin') is-invalid @enderror" value="Laki-Laki"  type="radio" name="jenis_kelamin">
                                 <label class="form-check-label">Laki-Laki</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" {{ $guru->jenis_kelamin=='Perempuan' ? "checked" : "" }} @error('jenis_kelamin') is-invalid @enderror"  value="Perempuan" type="radio" name="jenis_kelamin">
+                                <input class="form-check-input"  @error('jenis_kelamin') is-invalid @enderror"  value="Perempuan" type="radio" name="jenis_kelamin">
                                 <label class="form-check-label">Perempuan</label>
                             </div>
                         @error('password') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword">Tempat Lahir</label>
-                        <input type="text" class="form-control" id="exampleInputPassword"  placeholder="Tempat Lahir" name="tempat_lahir" value="{{$guru->tempat_lahir ?? old('tempat_lahir')}}">
+                        <input type="text" class="form-control" id="exampleInputPassword" placeholder="Tempat Lahir" name="tempat_lahir">
                     </div>
-                        <div class="form-group">
+                    <div class="form-group">
                         <label>Tanggal Lahir</label>
-                            @php
-                            $config = ['format' => 'DD/MM/YYYY'];
-                            @endphp
-                        <x-adminlte-input-date name="idDisabled" value="{{$guru->tanggal_lahir ?? old('tanggal_lahir')}}" :config="$config" />
+                        @php
+                        $config = ['format' => 'L'];
+                        @endphp
+                        <x-adminlte-input-date name="tanggal_lahir" :config="$config" placeholder="Tanggal Lahir...">
+                            <x-slot name="appendSlot">
+                                <div class="input-group-text bg-gradient-danger">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input-date>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword">Agama</label>
                             <div class="form-check">
-                                <input class="form-check-input"  @error('agama') is-invalid @enderror" value="Islam"  type="radio" {{ $guru->agama=='Islam' ? "checked" : "" }} name="agama">
+                                <input class="form-check-input"  @error('agama') is-invalid @enderror" value="Islam"  type="radio" name="agama">
                                 <label class="form-check-label">Islam</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Kristen" type="radio" {{ $guru->agama=='Kristen' ? "checked" : "" }} name="agama">
+                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Kristen" type="radio" name="agama">
                                 <label class="form-check-label">Kristen</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Katolik" type="radio" {{ $guru->agama=='Katolik' ? "checked" : "" }} name="agama">
+                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Katolik" type="radio" name="agama">
                                 <label class="form-check-label">Katolik</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Hindu" type="radio" {{ $guru->agama=='Hindu' ? "checked" : "" }} name="agama">
+                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Hindu" type="radio" name="agama">
                                 <label class="form-check-label">Hindu</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Budha" type="radio" {{ $guru->agama=='Budha' ? "checked" : "" }} name="agama">
+                                <input class="form-check-input"  @error('agama') is-invalid @enderror"  value="Budha" type="radio" name="agama">
                                 <label class="form-check-label">Budha</label>
                             </div>
                         @error('password') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword">Alamat</label>
-                        <input type="text" class="form-control" id="exampleInputPassword" placeholder="Alamat" name="alamat" value="{{$guru->alamat ?? old('alamat')}}">
+                        <input type="text" class="form-control" id="exampleInputPassword" placeholder="Alamat" name="alamat">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword">No Hp</label>
-                        <input type="text" class="form-control" id="exampleInputPassword" placeholder="No Handphone" name="hp" value="{{$guru->hp ?? old('hp')}}">
+                        <input type="text" class="form-control" id="exampleInputPassword" placeholder="No Handphone" name="hp">
                     </div>
 
                 </div>
@@ -88,3 +93,10 @@
         </div>
     </div>
 @stop
+
+<script>
+
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+</script>

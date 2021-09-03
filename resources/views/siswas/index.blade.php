@@ -1,14 +1,14 @@
 @extends('adminlte::page')
 @section('title', 'List User')
 @section('content_header')
-    <h1 class="m-0 text-dark">List Kelas</h1>
+    <h1 class="m-0 text-dark">List Siswa</h1>
 @stop
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{route('kelas.create')}}" class="btn btn-primary mb-2">
+                    <a href="{{route('siswas.create')}}" class="btn btn-primary mb-2">
                         Tambah
                     </a>
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -16,21 +16,33 @@
                         <tr>
                             <th>No.</th>
                             <th>Nama</th>
-                            <th>Tingkat</th>
+                            <th>Email</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Tempat Lahir</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Agama</th>
+                            <th>Alamat</th>
+                            <th>No Hp</th>
                             <th>Opsi</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($kelas as $key => $kelas)
+                        @foreach($siswas as $key => $siswa)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$kelas->nama}}</td>
-                                <td>{{$kelas->tingkat}}</td>
+                                <td>{{$siswa->nama}}</td>
+                                <td>{{$siswa->email}}</td>
+                                <td>{{$siswa->jenis_kelamin}}</td>
+                                <td>{{$siswa->tempat_lahir}}</td>
+                                <td>{{$siswa->tanggal_lahir}}</td>
+                                <td>{{$siswa->agama}}</td>
+                                <td>{{$siswa->alamat}}</td>
+                                <td>{{$siswa->hp}}</td>
                                 <td>
-                                    <a href="{{route('siswas.edit', $kelas)}}" class="btn btn-primary btn-xs">
+                                    <a href="{{route('siswas.edit', $siswa)}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
-                                    <a href="{{route('siswas.destroy', $kelas)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                    <a href="{{route('siswas.destroy', $siswa)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
                                 </td>
