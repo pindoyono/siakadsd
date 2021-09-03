@@ -37,12 +37,12 @@
                                 <td>{{$guru->tanggal_lahir}}</td>
                                 <td>{{$guru->agama}}</td>
                                 <td>{{$guru->alamat}}</td>
-                                <td>{{$guru->hp}}</td
+                                <td>{{$guru->hp}}</td>
                                 <td>
-                                    <a href="{{route('gurus.edit', $user)}}" class="btn btn-primary btn-xs">
+                                    <a href="{{route('gurus.edit', $guru)}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
-                                    <a href="{{route('gurus.destroy', $user)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                    <a href="{{route('gurus.destroy', $guru)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
                                 </td>

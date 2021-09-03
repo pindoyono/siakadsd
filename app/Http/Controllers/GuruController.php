@@ -51,6 +51,25 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'Nama' => 'required',
+            'email' => 'required|email|unique:gurus,email',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir'  => 'required',
+            'tanggal_lahir' => 'required',
+            'agama' => 'required',
+            'alamat'    => 'required',
+            'hp'    => 'required',
+        ]);
+
+        $array = $request->only([
+            'Nama','email','jenis_kelamin','tempat_lahir','tanggal_lahir','agama','alamat','hp',
+        ]);
+
+        $guru = Guru::create($array);
+        return redirect()->route('gurus.index')
+            ->with('success_message', 'Berhasil menambah Guru baru');
     }
 
     /**
@@ -62,6 +81,7 @@ class GuruController extends Controller
     public function show(Guru $guru)
     {
         //
+
     }
 
     /**
@@ -72,7 +92,9 @@ class GuruController extends Controller
      */
     public function edit(Guru $guru)
     {
-        //
+          return view('gurus.edit', [
+              'guru' => $guru
+          ]);
     }
 
     /**
@@ -85,6 +107,20 @@ class GuruController extends Controller
     public function update(Request $request, Guru $guru)
     {
         //
+        // dd($guru);
+
+        $request->validate([
+            'Nama' => 'required',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir'  => 'required',
+            'agama' => 'required',
+            'alamat'    => 'required',
+            'hp'    => 'required',
+        ]);
+        $guru->update($request->all());
+
+        return redirect()->route('gurus.index')
+                        ->with('success_message','Data Guru Berhasi Di Ubah');
     }
 
     /**
@@ -96,5 +132,9 @@ class GuruController extends Controller
     public function destroy(Guru $guru)
     {
         //
+        $guru->delete();
+
+        return redirect()->route('gurus.index')
+                        ->with('success_message','Data Guru Berhasi Di Hapus');
     }
 }
