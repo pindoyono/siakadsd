@@ -343,11 +343,11 @@ return [
                 ],
                 [
                     'text' => 'Siswa',
-                    'url'  => '#',
+                    'url'  => '/siswas',
                 ],
                 [
                     'text' => 'Kelas',
-                    'url'  => '#',
+                    'url'  => 'kelas',
                 ],
             ],
         ],

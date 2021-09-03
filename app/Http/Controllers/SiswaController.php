@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Guru;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
-class GuruController extends Controller
+
+class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,19 +16,19 @@ class GuruController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:guru-list|guru-create|guru-edit|guru-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:guru-create', ['only' => ['create','store']]);
-         $this->middleware('permission:guru-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:guru-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:siswa-list|siswa-create|siswa-edit|siswa-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:siswa-create', ['only' => ['create','store']]);
+         $this->middleware('permission:siswa-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:siswa-delete', ['only' => ['destroy']]);
     }
 
 
     public function index()
     {
         //
-        $gurus = Guru::all();
-        return view('gurus.index', [
-            'gurus' => $gurus
+        $siswas = Siswa::all();
+        return view('siswas.index', [
+            'siswas' => $siswas
         ]);
     }
 
@@ -39,7 +40,7 @@ class GuruController extends Controller
     public function create()
     {
         //
-        return view('gurus.create');
+        return view('siswas.create');
     }
 
     /**
@@ -51,64 +52,60 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         //
-
         $request->validate([
-            'Nama' => 'required',
+            'nama' => 'required',
             'email' => 'required|email|unique:gurus,email',
             'jenis_kelamin' => 'required',
             'tempat_lahir'  => 'required',
-            'tanggal_lahir' => 'required',
             'agama' => 'required',
             'alamat'    => 'required',
             'hp'    => 'required',
         ]);
 
         $array = $request->only([
-            'Nama','email','jenis_kelamin','tempat_lahir','tanggal_lahir','agama','alamat','hp',
+            'nama','email','jenis_kelamin','tempat_lahir','tanggal_lahir','agama','alamat','hp',
         ]);
 
-        $guru = Guru::create($array);
-        return redirect()->route('gurus.index')
-            ->with('success_message', 'Berhasil menambah Guru baru');
+        $siswa = Siswa::create($array);
+        return redirect()->route('siswas.index')
+            ->with('success_message', 'Berhasil menambah Siswa baru');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Guru  $guru
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Guru $guru)
+    public function show(Siswa $siswa)
     {
         //
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Guru  $guru
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Guru $guru)
+    public function edit(Siswa $siswa)
     {
-          return view('gurus.edit', [
-              'guru' => $guru
-          ]);
+        //
+        return view('siswas.edit', [
+            'siswa' => $siswa
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Guru  $guru
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Guru $guru)
+    public function update(Request $request, Siswa $siswa)
     {
         //
-        // dd($guru);
-
         $request->validate([
             'Nama' => 'required',
             'jenis_kelamin' => 'required',
@@ -117,24 +114,24 @@ class GuruController extends Controller
             'alamat'    => 'required',
             'hp'    => 'required',
         ]);
-        $guru->update($request->all());
+        $siswa->update($request->all());
 
-        return redirect()->route('gurus.index')
-                        ->with('success_message','Data Guru Berhasi Di Ubah');
+        return redirect()->route('siwas.index')
+                        ->with('success_message','Data Siswa Berhasi Di Ubah');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Guru  $guru
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Guru $guru)
+    public function destroy(Siswa $siswa)
     {
         //
-        $guru->delete();
+        $siswa->delete();
 
-        return redirect()->route('gurus.index')
-                        ->with('success_message','Data Guru Berhasi Di Hapus');
+        return redirect()->route('siswa.index')
+                        ->with('success_message','Data Siswa Berhasi Di Hapus');
     }
 }

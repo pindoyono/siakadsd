@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Permission;
 use Spatie\Permission\Models\Role;
 use DB;
-
+use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
     /**
@@ -46,10 +45,9 @@ class PermissionController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        $array = $request->only([
-            'name'
-        ]);
-        $permission = Permission::create($array);
+
+
+        Permission::create(['name' =>  $request->name,]);
 
         return redirect()->route('permissions.index')
             ->with('success_message', 'Berhasil menambah permission baru');
