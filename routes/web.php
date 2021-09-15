@@ -8,7 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\KelasController;
+use App\Http\Controllers\KlasController;
+use App\Http\Controllers\RombelController;
+use App\Http\Controllers\MapelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('permissions', PermissionController::class);
     Route::resource('gurus', GuruController::class);
     Route::resource('siswas', SiswaController::class);
-    Route::resource('kelas', KelasController::class);
+    Route::resource('kelas', KlasController::class);
+    Route::resource('rombels', RombelController::class);
+    Route::resource('mapels', MapelController::class);
+    Route::post('/anggota', [RombelController::class, 'anggota'])->name('rombels.anggota');
 });
 

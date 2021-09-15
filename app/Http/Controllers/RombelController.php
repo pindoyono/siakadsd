@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
+use App\Models\Rombel;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
-class KelasController extends Controller
+class RombelController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     function __construct()
     {
          $this->middleware('permission:kelas-list|kelas-create|kelas-edit|kelas-delete', ['only' => ['index','store']]);
@@ -25,10 +25,9 @@ class KelasController extends Controller
     public function index()
     {
         //
-        //
-        $kelas = Kelas::all();
+        $rombels = Rombel::all();
         return view('kelas.index', [
-            'kelas' => $kelas
+            'rombels' => $rombels
         ]);
     }
 
@@ -52,43 +51,59 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         //
-
         $request->validate([
             'nama' => 'required',
-            'tingkat'    => 'required',
+            'tingkat' => 'required',
         ]);
 
-        $array = $request->only([
-            'nama','tingkat',
-        ]);
-
-        $kelas = Kelas::create($array);
-        return redirect()->route('kelas.index')
+        $rombels = Rombel::create($request->all());
+        return redirect()->route('rombels.index')
             ->with('success_message', 'Berhasil menambah Kelas baru');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kelas  $kelas
+     * @param  \App\Models\Rombel  $rombel
      * @return \Illuminate\Http\Response
      */
-    public function show(Kelas $kelas)
+    public function show(Rombel $rombel)
     {
         //
+        $anggota = Siswa::where('id_rombel',$rombel->id)->get();
+        $non_anggota = Siswa::where('id_rombel',0)->get();
+        return view('kelas.anggota', [
+            'rombel' => $rombel,
+            'anggota' => $anggota,
+            'non_anggota' => $non_anggota,
+        ]);
+    }
+
+    public function anggota(Request $request)
+    {
+        //
+        dd($request->all());
+        $request->validate([
+            'nama' => 'required',
+            'tingkat' => 'required',
+        ]);
+
+        $rombels = Rombel::create($request->all());
+        return redirect()->route('rombels.index')
+            ->with('success_message', 'Berhasil menambah Kelas baru');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kelas  $kelas
+     * @param  \App\Models\Rombel  $rombel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kelas $kelas)
+    public function edit(Rombel $rombel)
     {
         //
         return view('kelas.edit', [
-            'kelas' => $kelas
+            'rombel' => $rombel
         ]);
     }
 
@@ -96,30 +111,34 @@ class KelasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kelas  $kelas
+     * @param  \App\Models\Rombel  $rombel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kelas $kelas)
+    public function update(Request $request, Rombel $rombel)
     {
         //
         $request->validate([
             'nama' => 'required',
-            'tingkat'    => 'required',
+            'tingkat' => 'required',
         ]);
-        $kelas->update($request->all());
 
-        return redirect()->route('kelas.index')
-                        ->with('success_message','Data Kelas Berhasi Di Ubah');
+        $rombel->update($request->all());
+        return redirect()->route('rombels.index')
+            ->with('success_message', 'Berhasil mengUbah Kelas baru');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kelas  $kelas
+     * @param  \App\Models\Rombel  $rombel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kelas)
+    public function destroy(Rombel $rombel)
     {
         //
+        $rombel->delete();
+
+        return redirect()->route('rombels.index')
+                        ->with('success_message','Data Kelas Berhasi Di Hapus');
     }
 }

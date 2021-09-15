@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{route('gurus.create')}}" class="btn btn-primary mb-2">
+                    <a href="{{route('mapels.create')}}" class="btn btn-primary mb-2">
                         Tambah
                     </a>
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -16,33 +16,23 @@
                         <tr>
                             <th>No.</th>
                             <th>Nama</th>
-                            <th>Email</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Tempat Lahir</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Agama</th>
-                            <th>Alamat</th>
-                            <th>No Hp</th>
+                            <th>Kelompok Mapel</th>
+                            <th>Urutan Mapel</th>
                             <th>Opsi</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($gurus as $key => $guru)
+                        @foreach($mapels as $key => $mapel)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$guru->Nama}}</td>
-                                <td>{{$guru->email}}</td>
-                                <td>{{$guru->jenis_kelamin}}</td>
-                                <td>{{$guru->tempat_lahir}}</td>
-                                <td>{{$guru->tanggal_lahir}}</td>
-                                <td>{{$guru->agama}}</td>
-                                <td>{{$guru->alamat}}</td>
-                                <td>{{$guru->hp}}</td>
+                                <td>{{$mapel->nama}}</td>
+                                <td>{{$mapel->kelompok}}</td>
+                                <td>{{$mapel->no_urut}}</td>
                                 <td>
-                                    <a href="{{route('gurus.edit', $guru)}}" class="btn btn-primary btn-xs">
+                                    <a href="{{route('mapels.edit', $mapel)}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
-                                    <a href="{{route('gurus.destroy', $guru)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                    <a href="{{route('mapels.destroy', $mapel)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
                                 </td>

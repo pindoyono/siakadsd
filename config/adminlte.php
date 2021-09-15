@@ -347,7 +347,11 @@ return [
                 ],
                 [
                     'text' => 'Kelas',
-                    'url'  => 'kelas',
+                    'url'  => 'rombels',
+                ],
+                [
+                    'text' => 'Mata Pelajaran',
+                    'url'  => 'mapels',
                 ],
             ],
         ],
@@ -442,6 +446,16 @@ return [
                     'type' => 'css',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor\select2\css\bootstrap-duallistbox.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor\select2\js\jquery.bootstrap-duallistbox.min.js',
                 ],
             ],
         ],

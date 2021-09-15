@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{route('kelas.create')}}" class="btn btn-primary mb-2">
+                    <a href="{{route('rombels.create')}}" class="btn btn-primary mb-2">
                         Tambah
                     </a>
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -21,16 +21,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($kelas as $key => $kelas)
+                        @foreach($rombels as $key => $rombel)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$kelas->nama}}</td>
-                                <td>{{$kelas->tingkat}}</td>
+                                <td>{{$rombel->nama}}</td>
+                                <td>{{$rombel->tingkat}}</td>
                                 <td>
-                                    <a href="{{route('siswas.edit', $kelas)}}" class="btn btn-primary btn-xs">
+                                    <a href="{{route('rombels.edit',$rombel)}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
-                                    <a href="{{route('siswas.destroy', $kelas)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                    <a href="{{route('rombels.show',$rombel)}}" class="btn btn-success btn-xs">
+                                        <i class="fas fa-search-plus"></i>
+                                        Anggota Rombel
+                                    </a>
+                                    <a href="{{route('rombels.show',$rombel)}}" class="btn btn-info btn-xs">
+                                        <i class="fas fa-search-plus"></i>
+                                        Pembelajaran
+                                    </a>
+                                    <a href="{{route('rombels.destroy',$rombel)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
                                 </td>

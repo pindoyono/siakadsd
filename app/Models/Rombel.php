@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class Kelas extends Model
+class Rombel extends Model
 {
     use HasFactory;
     protected $fillable = [

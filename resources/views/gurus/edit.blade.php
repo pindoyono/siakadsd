@@ -80,7 +80,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{route('siswas.index')}}" class="btn btn-default">
+                    <a href="{{route('gurus.index')}}" class="btn btn-default">
                         Batal
                     </a>
                 </div>

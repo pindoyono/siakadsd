@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputName">Nama</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputName" placeholder="Nama lengkap" name="nama" value="{{$siswa->Nama ?? old('Nama')}}">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputName" placeholder="Nama lengkap" name="nama" value="{{$siswa->nama ?? old('Nama')}}">
                         @error('name') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
@@ -37,12 +37,12 @@
                         <label for="exampleInputPassword">Tempat Lahir</label>
                         <input type="text" class="form-control" id="exampleInputPassword"  placeholder="Tempat Lahir" name="tempat_lahir" value="{{$siswa->tempat_lahir ?? old('tempat_lahir')}}">
                     </div>
-                        <div class="form-group">
+                    <div class="form-group">
                         <label>Tanggal Lahir</label>
                             @php
                             $config = ['format' => 'DD/MM/YYYY'];
                             @endphp
-                        <x-adminlte-input-date name="idDisabled" value="{{$siswa->tanggal_lahir}}" :config="$config" />
+                        <x-adminlte-input-date name="idDisabled" value="{{$siswa->tanggal_lahir ?? old('tanggal_lahir')}}" :config="$config" />
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword">Agama</label>
