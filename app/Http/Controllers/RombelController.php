@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Rombel;
 use App\Models\Siswa;
+use App\Models\Guru;
+use App\Models\Mapel;
 use Illuminate\Http\Request;
 
 class RombelController extends Controller
@@ -70,6 +72,7 @@ class RombelController extends Controller
     public function show(Rombel $rombel)
     {
         //
+        // dd($rombel);
         $anggota = Siswa::where('id_rombel',$rombel->id)->get();
         $non_anggota = Siswa::where('id_rombel',0)->get();
         return view('kelas.anggota', [
@@ -79,18 +82,101 @@ class RombelController extends Controller
         ]);
     }
 
-    public function anggota(Request $request)
+    public function pembelajaran($rombel)
     {
         //
-        dd($request->all());
+        // dd($rombel);
+        $mapel = Mapel::where('id_rombel',$rombel)->get();
+        $rombel = Rombel::find($rombel);
+        $all_mapel = Mapel::get();
+        $guru = Guru::all();
+        return view('kelas.pembelajaran', [
+            'rombel' => $rombel,
+            'mapel' => $mapel,
+            'guru' => $guru,
+            'all_mapel' => $all_mapel,
+        ]);
+    }
+
+    public function anggota(Request $request,$rombel)
+    {
+        //
+
         $request->validate([
-            'nama' => 'required',
-            'tingkat' => 'required',
+            'anggota' => 'required',
         ]);
 
-        $rombels = Rombel::create($request->all());
-        return redirect()->route('rombels.index')
-            ->with('success_message', 'Berhasil menambah Kelas baru');
+        foreach ($request->anggota as $agg){
+                $siswa = Siswa::find($agg);
+                $siswa->id_rombel = $rombel;
+                $siswa->update();
+            }
+
+        $rombel = Rombel::find($rombel);
+        return redirect()->route('rombels.show',$rombel)
+            ->with('success_message', 'Berhasil Menambahkan anggota Kelas baru');
+    }
+
+    public function mapel(Request $request,$rombel)
+    {
+        //
+
+        $request->validate([
+            'mapel' => 'required',
+        ]);
+
+        foreach ($request->mapel as $map){
+                $mapel = Mapel::find($map);
+                $mapel->id_rombel = $rombel;
+                $mapel->update();
+            }
+
+        $rombel = Rombel::find($rombel);
+        return redirect()->route('rombels.pembelajaran',$rombel)
+            ->with('success_message', 'Berhasil Menambahkan anggota Pembeljaran baru');
+    }
+
+    public function keluar($id)
+    {
+
+        $siswa = Siswa::find($id);
+        $rombel = Rombel::find($siswa->id_rombel);
+        $siswa->id_rombel = 0;
+        $siswa->update();
+
+        return redirect()->route('rombels.show',$rombel)
+            ->with('success_message', 'Berhasil Mengeluarkan anggota Kelas baru');
+    }
+
+    public function keluar2($id)
+    {
+
+        $mapel = mapel::find($id);
+        $rombel = Rombel::find($mapel->id_rombel);
+        $mapel->id_rombel = 0;
+        $mapel->update();
+
+        return redirect()->route('rombels.pembelajaran',$rombel)
+            ->with('success_message', 'Berhasil Mengeluarkan Pembelajaran Kelas baru');
+    }
+
+    public function set_guru(Request $request, $mapel)
+    {
+
+            $request->validate([
+                'guru_id' => 'required',
+            ]);
+
+            $guru = Guru::find($request->guru_id);
+        // dd($guru);
+        $guru->mapel_id = $mapel;
+        $guru->update();
+
+        $mapel = mapel::find($mapel);
+        $rombel = Rombel::find($mapel->id_rombel);
+
+        return redirect()->route('rombels.pembelajaran',$rombel)
+            ->with('success_message', 'Berhasil Memperbarui Guru Pengajar');
     }
 
     /**
@@ -106,6 +192,7 @@ class RombelController extends Controller
             'rombel' => $rombel
         ]);
     }
+
 
     /**
      * Update the specified resource in storage.

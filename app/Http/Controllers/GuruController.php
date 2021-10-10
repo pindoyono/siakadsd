@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use Illuminate\Http\Request;
-
+use App\Models\User;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use DB;
+use Hash;
+use Illuminate\Support\Arr;
 class GuruController extends Controller
 {
+    use HasRoles;
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +46,10 @@ class GuruController extends Controller
     public function create()
     {
         //
-        return view('gurus.create');
+        $roles = Role::all();
+        return view('gurus.create', [
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -61,13 +71,31 @@ class GuruController extends Controller
             'agama' => 'required',
             'alamat'    => 'required',
             'hp'    => 'required',
+            'role'    => 'required',
         ]);
+        // dd($request->role);
+
+        $array_user = [
+            'name' => $request->Nama,
+            'email' => $request->email,
+            'password' => bcrypt(12345678) ,
+        ];
+        $user = User::create($array_user);
+
+        $user->assignRole($request->role);
+
+
+
 
         $array = $request->only([
             'Nama','email','jenis_kelamin','tempat_lahir','tanggal_lahir','agama','alamat','hp',
         ]);
+        $array['user_id'] = $user->id;
 
         $guru = Guru::create($array);
+
+
+
         return redirect()->route('gurus.index')
             ->with('success_message', 'Berhasil menambah Guru baru');
     }
@@ -92,8 +120,12 @@ class GuruController extends Controller
      */
     public function edit(Guru $guru)
     {
+        $roles = Role::all();
+        $user = User::find($guru->user_id);
           return view('gurus.edit', [
-              'guru' => $guru
+              'guru' => $guru,
+              'roles' => $roles,
+              'user' => $user,
           ]);
     }
 
@@ -116,9 +148,17 @@ class GuruController extends Controller
             'agama' => 'required',
             'alamat'    => 'required',
             'hp'    => 'required',
+            'role'    => 'required',
         ]);
         $guru->update($request->all());
-
+        $user = User::find($guru->user_id);
+        $array_user = [
+            'name' => $request->Nama,
+            'email' => $request->email,
+            'password' => bcrypt(12345678) ,
+        ];
+        $user = User::update($array_user);
+        $user->syncRoles($request->role);
         return redirect()->route('gurus.index')
                         ->with('success_message','Data Guru Berhasi Di Ubah');
     }
@@ -132,8 +172,9 @@ class GuruController extends Controller
     public function destroy(Guru $guru)
     {
         //
+        $user = User::find($guru->user_id);
+        $user->delete();
         $guru->delete();
-
         return redirect()->route('gurus.index')
                         ->with('success_message','Data Guru Berhasi Di Hapus');
     }

@@ -34,7 +34,7 @@
                                         <i class="fas fa-search-plus"></i>
                                         Anggota Rombel
                                     </a>
-                                    <a href="{{route('rombels.show',$rombel)}}" class="btn btn-info btn-xs">
+                                    <a href="{{route('rombels.pembelajaran',$rombel)}}" class="btn btn-info btn-xs">
                                         <i class="fas fa-search-plus"></i>
                                         Pembelajaran
                                     </a>

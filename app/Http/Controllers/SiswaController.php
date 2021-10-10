@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use DB;
+use Hash;
+use Illuminate\Support\Arr;
 
 
 class SiswaController extends Controller
@@ -40,7 +47,10 @@ class SiswaController extends Controller
     public function create()
     {
         //
-        return view('siswas.create');
+        $roles = Role::all();
+        return view('siswas.create',[
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -57,14 +67,26 @@ class SiswaController extends Controller
             'email' => 'required|email|unique:gurus,email',
             'jenis_kelamin' => 'required',
             'tempat_lahir'  => 'required',
+            'tanggal_lahir'  => 'required',
             'agama' => 'required',
             'alamat'    => 'required',
             'hp'    => 'required',
         ]);
 
+        $array_user = [
+            'name' => $request->nama,
+            'email' => $request->email,
+            'password' => bcrypt(12345678) ,
+        ];
+        $user = User::create($array_user);
+
+        $user->assignRole($request->role);
+
+
         $array = $request->only([
             'nama','email','jenis_kelamin','tempat_lahir','tanggal_lahir','agama','alamat','hp',
         ]);
+        $array['user_id']=$user->id;
 
         $siswa = Siswa::create($array);
         return redirect()->route('siswas.index')
@@ -91,9 +113,14 @@ class SiswaController extends Controller
     public function edit(Siswa $siswa)
     {
         //
-        return view('siswas.edit', [
-            'siswa' => $siswa
-        ]);
+        $roles = Role::all();
+        $user = User::find($siswa->user_id);
+          return view('siswas.edit', [
+              'siswa' => $siswa,
+              'roles' => $roles,
+              'user' => $user,
+          ]);
+
     }
 
     /**
@@ -116,6 +143,16 @@ class SiswaController extends Controller
         ]);
         $siswa->update($request->all());
 
+        $array_user = [
+            'name' => $request->nama,
+            'email' => $request->email,
+            'password' => bcrypt(12345678) ,
+        ];
+        $user = User::update($array_user);
+
+        $user = User::find($siswa->user_id);
+        $user->syncRoles($request->role);
+
         return redirect()->route('siswas.index')
                         ->with('success_message','Data Siswa Berhasi Di Ubah');
     }
@@ -129,8 +166,9 @@ class SiswaController extends Controller
     public function destroy(Siswa $siswa)
     {
         //
+        $user = User::find($siswa->user_id);
+        $user->delete();
         $siswa->delete();
-
         return redirect()->route('siswas.index')
                         ->with('success_message','Data Siswa Berhasi Di Hapus');
     }

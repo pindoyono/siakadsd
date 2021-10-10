@@ -76,6 +76,15 @@
                         <label for="exampleInputPassword">No Hp</label>
                         <input type="text" class="form-control" id="exampleInputPassword" placeholder="No Handphone" name="hp" value="{{$siswa->hp ?? old('hp')}}">
                     </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword">Pilih Role</label>
+                        @foreach($roles as $role)
+                            <div class="custom-control custom-checkbox">
+                                <input name="role[]" class="custom-control-input" type="checkbox" id="{{ $role->name }}" value="{{ $role->id }}" {{$user->getRoleNames()->contains($role->name) ? 'checked' : '' }}>
+                                <label for="{{ $role->name }}" class="custom-control-label">{{ $role->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
 
                 </div>
                 <div class="card-footer">

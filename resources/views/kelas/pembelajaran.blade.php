@@ -2,7 +2,7 @@
 @section('title', 'List User')
 @section('content_header')
 <div class="row">
-    <div class="col-md-8"><h1 class="m-0 text-dark">Anggota Kelas {{$rombel->nama }}</h1></div>
+    <div class="col-md-8"><h1 class="m-0 text-dark">Pembelajaran Kelas {{$rombel->nama }}</h1></div>
 @stop
 @section('content')
     <div class="row">
@@ -11,23 +11,22 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-edit"></i>
-                    Anggota Kelas
+                    Pembelajaran Kelas
                   </h3>
                 </div>
-                <form action="{{route('rombels.anggota', $rombel->id)}}" method="post">
+                <form action="{{route('rombels.mapel', $rombel->id)}}" method="post">
                     @csrf
                     <div class="card-body pad table-responsive">
                         <div  class="form-group">
-                            <select name='anggota[]' class="duallistbox" multiple="multiple">
-                                @foreach($anggota as $key => $agg)
-                                    <option  selected value="{{$agg->id}}">{{$agg->nama}}</option>
+                            <select name='mapel[]' class="duallistbox" multiple="multiple">
+                                @foreach($mapel as $key => $map)
+                                    <option  selected value="{{$map->id}}">{{$map->nama}}</option>
                                 @endforeach
-                                @foreach($non_anggota as $key => $non_agg)
-                                    <option  value="{{$non_agg->id}}" >{{$non_agg->nama}}</option>
+                                @foreach($all_mapel as $key => $all_map)
+                                    <option  value="{{$all_map->id}}" >{{$all_map->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <input name='id_rombel' value='' type="hidden">
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -53,16 +52,39 @@
                         <tr>
                             <th>No.</th>
                             <th>Nama</th>
+                            <th>Pengajar</th>
                             <th>Opsi</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach($anggota as $key => $agg)
+                            @foreach($mapel as $key => $map)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$agg->nama}}</td>
+                                <td>{{$map->nama}}</td>
                                 <td>
-                                    <a href="{{route('rombels.keluar',$agg->id)}}" class="btn btn-danger btn-xs">
+                                        <form class="row" action="{{route('rombels.set_guru',$map)}}" method="post">
+                                            @method('PUT')
+                                            @csrf
+                                            <div class="col-sm-9">
+                                            <!-- checkbox -->
+                                            <div class="form-group">
+                                                <select class=" select2" name="guru_id" style="width: 100%;">
+                                                    <option value="">Pilih Guru Pengajar</option>
+                                                    @foreach($guru as $key => $gur)
+                                                        <option {{ $map->id == $gur->mapel_id ? 'selected' : '' }} value="{{$gur->id}}">{{ $gur->Nama}}</option>
+                                                        {{-- <option {{ $map->id == $gur->mapel_id ? 'selected' : '' }} value="{{$gur->id}}">{{  $map->id.'dan'.$gur->mapel_id  }}</option> --}}
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                            <!-- radio -->
+                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                            </div>
+                                        </form>
+                                </td>
+                                <td>
+                                    <a href="{{route('rombels.keluar2',$map->id)}}" class="btn btn-danger btn-xs">
                                         keluar
                                     </a>
                                 </td>
@@ -82,6 +104,12 @@
         @csrf
     </form>
     <script>
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+        theme: 'bootstrap4'
+        })
          //Bootstrap Duallistbox
         $('.duallistbox').bootstrapDualListbox();
 

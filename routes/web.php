@@ -44,6 +44,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('kelas', KlasController::class);
     Route::resource('rombels', RombelController::class);
     Route::resource('mapels', MapelController::class);
-    Route::post('/anggota', [RombelController::class, 'anggota'])->name('rombels.anggota');
+    Route::post('/anggota/{id}', [RombelController::class, 'anggota'])->name('rombels.anggota');
+    Route::get('/keluar/{id}', [RombelController::class, 'keluar'])->name('rombels.keluar');
+    Route::get('/keluar2/{id}', [RombelController::class, 'keluar2'])->name('rombels.keluar2');
+    Route::put('/set_guru/{id}', [RombelController::class, 'set_guru'])->name('rombels.set_guru');
+    Route::get('/pembelajaran/{mapel}', [RombelController::class, 'pembelajaran'])->name('rombels.pembelajaran');
+    Route::post('/mapel/{id}', [RombelController::class, 'mapel'])->name('rombels.mapel');
 });
 
+
+Route::get('profile/{user}', function(App\User $user)
+{
+    //
+});
