@@ -148,9 +148,9 @@ class SiswaController extends Controller
             'email' => $request->email,
             'password' => bcrypt(12345678) ,
         ];
-        $user = User::update($array_user);
-
         $user = User::find($siswa->user_id);
+        $user->update($array_user);
+
         $user->syncRoles($request->role);
 
         return redirect()->route('siswas.index')

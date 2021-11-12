@@ -6,7 +6,10 @@ use App\Models\Rombel;
 use App\Models\Siswa;
 use App\Models\Guru;
 use App\Models\Mapel;
+use App\Models\Relasi_rombel_mapel;
 use Illuminate\Http\Request;
+use DB;
+
 
 class RombelController extends Controller
 {
@@ -28,8 +31,11 @@ class RombelController extends Controller
     {
         //
         $rombels = Rombel::all();
+        $guru = Guru::all();
+
         return view('kelas.index', [
-            'rombels' => $rombels
+            'rombels' => $rombels,
+            'guru' => $guru
         ]);
     }
 
@@ -85,11 +91,38 @@ class RombelController extends Controller
     public function pembelajaran($rombel)
     {
         //
-        // dd($rombel);
-        $mapel = Mapel::where('id_rombel',$rombel)->get();
-        $rombel = Rombel::find($rombel);
-        $all_mapel = Mapel::get();
+        // $mapel = Mapel::where('id_rombel',$rombel)->get();
+        $mapel = DB::table('mapels')
+            ->join('relasi_rombel_mapels', 'mapels.id', '=', 'relasi_rombel_mapels.id_mapel')
+            ->join('rombels', 'rombels.id', '=', 'relasi_rombel_mapels.id_rombel')
+            ->where('rombels.id', $rombel)
+            ->select('mapels.*','relasi_rombel_mapels.id as id_relasi_rombel_mapels','relasi_rombel_mapels.id_guru as id_guru')
+            ->get();
+
+        $notin = DB::table('mapels')
+        ->join('relasi_rombel_mapels', 'mapels.id', '=', 'relasi_rombel_mapels.id_mapel')
+        ->join('rombels', 'rombels.id', '=', 'relasi_rombel_mapels.id_rombel')
+        ->where('rombels.id', $rombel)
+        ->select('mapels.id')
+        ->get()->toArray();
+
+        foreach ($notin as $not) {
+            $array[] = $not->id;
+        }
+
+
+
+
+        // $all_mapel = DB::table('mapels')
+        // ->whereNotIn('id', $array)
+        // ->get();
+        $all_mapel = Mapel::whereNotIn('id', $array)->get();
+
+        // dd($all_mapel);
+
         $guru = Guru::all();
+        $rombel = Rombel::find($rombel);
+
         return view('kelas.pembelajaran', [
             'rombel' => $rombel,
             'mapel' => $mapel,
@@ -126,10 +159,18 @@ class RombelController extends Controller
         ]);
 
         foreach ($request->mapel as $map){
-                $mapel = Mapel::find($map);
-                $mapel->id_rombel = $rombel;
-                $mapel->update();
+
+            if (Relasi_rombel_mapel::where('id_mapel', '=',$map)->where('id_rombel', '=',$rombel)->count()==0) {
+                $data = [
+                    'id_mapel' => $map,
+                    'id_rombel' => $rombel,
+                ];
+
+                Relasi_rombel_mapel::create($data);
             }
+
+        }
+
 
         $rombel = Rombel::find($rombel);
         return redirect()->route('rombels.pembelajaran',$rombel)
@@ -151,16 +192,34 @@ class RombelController extends Controller
     public function keluar2($id)
     {
 
-        $mapel = mapel::find($id);
-        $rombel = Rombel::find($mapel->id_rombel);
-        $mapel->id_rombel = 0;
-        $mapel->update();
+        $relasi = Relasi_rombel_mapel::find($id);
+        $rombel = Rombel::find($relasi->id_rombel);
+        $relasi->delete();
 
         return redirect()->route('rombels.pembelajaran',$rombel)
             ->with('success_message', 'Berhasil Mengeluarkan Pembelajaran Kelas baru');
     }
 
-    public function set_guru(Request $request, $mapel)
+    public function set_guru(Request $request, $relasi)
+    {
+
+            $request->validate([
+                'guru_id' => 'required',
+            ]);
+
+            $relasi = Relasi_rombel_mapel::find($relasi);
+        // dd($guru);
+        $data = [
+            'id_guru' => $request->guru_id,
+        ];
+
+        $relasi->update($data);
+
+
+        return redirect()->back()->with('success_message', 'Berhasil Memperbarui Guru Pengajar');
+    }
+
+    public function set_wali(Request $request, $rombel_id)
     {
 
             $request->validate([
@@ -169,14 +228,17 @@ class RombelController extends Controller
 
             $guru = Guru::find($request->guru_id);
         // dd($guru);
-        $guru->mapel_id = $mapel;
-        $guru->update();
+        $data = [
+            'wali_id' => $rombel_id,
+        ];
 
-        $mapel = mapel::find($mapel);
-        $rombel = Rombel::find($mapel->id_rombel);
+        if(Guru::where('wali_id',$rombel_id)->count()>0){
+            return redirect()->back()->with('errors_message', 'Silahkan pilih Guru Lain,Guru Sudah Menjadi walikelas ');
+        }else{
+            $guru->update($data);
+            return redirect()->back()->with('success_message', 'Berhasil Memperbarui Wali Kelas');
+        }
 
-        return redirect()->route('rombels.pembelajaran',$rombel)
-            ->with('success_message', 'Berhasil Memperbarui Guru Pengajar');
     }
 
     /**

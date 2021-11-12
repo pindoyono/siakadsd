@@ -1,48 +1,40 @@
 @extends('adminlte::page')
-@section('title', 'List User')
+@section('title', 'List Perencanaan')
 @section('content_header')
-    <h1 class="m-0 text-dark">List Siswa</h1>
+    <h1 class="m-0 text-dark">List Perencanaan</h1>
 @stop
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{route('siswas.create')}}" class="mb-2 btn btn-primary">
+                    <a href="{{route('perencanaans.create')}}" class="mb-2 btn btn-primary">
                         Tambah
                     </a>
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Tempat Lahir</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Agama</th>
-                            <th>Alamat</th>
-                            <th>No Hp</th>
-                            <th>Opsi</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Kelas</th>
+                            <th>Nama Penilaian</th>
+                            <th>Bobot</th>
+                            <th>opsi</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($siswas as $key => $siswa)
+                        @foreach($perencanaan as $key => $rencana)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$siswa->nama}}</td>
-                                <td>{{$siswa->email}}</td>
-                                <td>{{$siswa->jenis_kelamin}}</td>
-                                <td>{{$siswa->tempat_lahir}}</td>
-                                <td>{{$siswa->tanggal_lahir}}</td>
-                                <td>{{$siswa->agama}}</td>
-                                <td>{{$siswa->alamat}}</td>
-                                <td>{{$siswa->hp}}</td>
+                                <td>{{getMapel($rencana->id_mapel)}}</td>
+                                <td>{{getRombel($rencana->id_rombel)}}</td>
+                                <td>{{$rencana->nama_penilaian}}</td>
+                                <td>{{$rencana->bobot}}</td>
                                 <td>
-                                    <a href="{{route('siswas.edit', $siswa)}}" class="btn btn-primary btn-xs">
+                                    <a href="{{route('perencanaans.edit', $rencana)}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
-                                    <a href="{{route('siswas.destroy', $siswa)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                    <a href="{{route('perencanaans.destroy',$rencana)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
                                 </td>

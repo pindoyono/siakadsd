@@ -12,7 +12,7 @@ class Guru extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Nama','email','jenis_kelamin','tempat_lahir','tanggal_lahir','agama','alamat','hp','user_id','mapel_id',
+        'Nama','email','jenis_kelamin','tempat_lahir','tanggal_lahir','agama','alamat','hp','user_id','wali_id',
     ];
 
 }

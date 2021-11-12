@@ -357,8 +357,52 @@ return [
                     'text' => 'Mata Pelajaran',
                     'url'  => 'mapels',
                 ],
+                [
+                    'text' => 'Jadwal',
+                    'url'  => 'jadwals',
+                ],
             ],
         ],
+
+        [
+            'text' => 'Perencanaan',
+            'url'  => '/perencanaans',
+            'icon'  => 'fa fa-window-restore',
+            'can'  => ['perencanaan'],
+        ],
+
+        [
+            'text' => 'Nilai',
+            'url'  => '/nilais',
+            'icon'  => 'fa fa-archive',
+            'can'  => ['nilai-list','nilai-edit','nilai-create','nilai-delete'],
+        ],
+        [
+            'text' => 'Nilai',
+            'url'  => '/nilai_siswa',
+            'icon'  => 'fa fa-archive',
+            'can'  => ['nilai-siswa'],
+        ],
+        [
+            'text' => 'Laporan',
+            'url'  => '/laporans',
+            'icon'  => 'fa fa-file-signature',
+            'can'  => ['laporan-list','laporan-edit','laporan-create','laporan-delete'],
+        ],
+        [
+            'text' => 'Jadwal',
+            'url'  => '/jadwal_siswa',
+            'icon'  => 'fa fa-calendar-alt',
+            'can'  => ['jadwal-siswa'],
+        ],
+        [
+            'text' => 'Jadwal',
+            'url'  => '/jadwal_guru',
+            'icon'  => 'fa fa-calendar-alt',
+            'can'  => ['jadwal-guru'],
+        ],
+
+
     ],
 
     /*
@@ -436,6 +480,17 @@ return [
                     'asset' => true,
                     'location' => 'vendor/daterangepicker/daterangepicker.css',
                 ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
+                ],
+
             ],
         ],
 
@@ -527,6 +582,26 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+            ],
+        ],
+        'InputMaks' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/inputmask/jquery.inputmask.min.js',
                 ],
                 [
                     'type' => 'css',

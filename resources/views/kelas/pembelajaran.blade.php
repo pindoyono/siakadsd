@@ -62,7 +62,7 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$map->nama}}</td>
                                 <td>
-                                        <form class="row" action="{{route('rombels.set_guru',$map)}}" method="post">
+                                        <form class="row" action="{{route('rombels.set_guru',$map->id_relasi_rombel_mapels)}}" method="post">
                                             @method('PUT')
                                             @csrf
                                             <div class="col-sm-9">
@@ -71,10 +71,11 @@
                                                 <select class=" select2" name="guru_id" style="width: 100%;">
                                                     <option value="">Pilih Guru Pengajar</option>
                                                     @foreach($guru as $key => $gur)
-                                                        <option {{ $map->id == $gur->mapel_id ? 'selected' : '' }} value="{{$gur->id}}">{{ $gur->Nama}}</option>
+                                                        <option {{ $map->id_guru == $gur->id ? 'selected' : '' }} value="{{$gur->id}}">{{ $gur->Nama}}</option>
                                                         {{-- <option {{ $map->id == $gur->mapel_id ? 'selected' : '' }} value="{{$gur->id}}">{{  $map->id.'dan'.$gur->mapel_id  }}</option> --}}
                                                     @endforeach
                                                 </select>
+                                                <input type="hidden" name="rombel" value="{{$rombel->id}}">
                                             </div>
                                             </div>
                                             <div class="col-sm-3">
@@ -84,7 +85,7 @@
                                         </form>
                                 </td>
                                 <td>
-                                    <a href="{{route('rombels.keluar2',$map->id)}}" class="btn btn-danger btn-xs">
+                                    <a href="{{route('rombels.keluar2',$map->id_relasi_rombel_mapels)}}" class="btn btn-danger btn-xs">
                                         keluar
                                     </a>
                                 </td>

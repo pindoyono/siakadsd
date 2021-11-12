@@ -157,7 +157,7 @@ class GuruController extends Controller
             'email' => $request->email,
             'password' => bcrypt(12345678) ,
         ];
-        $user = User::update($array_user);
+        $user->update($array_user);
         $user->syncRoles($request->role);
         return redirect()->route('gurus.index')
                         ->with('success_message','Data Guru Berhasi Di Ubah');
