@@ -322,7 +322,7 @@ return [
             'text' => 'User',
             'url'  => '/users',
             'icon'  => 'fa fa-users',
-            'can'  => ['user-list','user-edit','user-create','user-delete'],
+            'can'  => ['user-list','user-edit','user-create','user-delete','role-list','role-edit','role-create','role-delete'],
         ],
         [
             'text' => 'Role',
@@ -334,12 +334,12 @@ return [
             'text' => 'Permission',
             'url'  => '/permissions',
             'icon'  => 'fa fa-key',
-            'can'  => ['permissions-list','permissions-edit','permissions-create','permissions-delete'],
+            'can'  => ['permissions-list','permissions-edit','permissions-create','permissions-delete','role-list','role-edit','role-create','role-delete'],
         ],
         [
             'text'    => 'Referensi',
             'icon'    => 'fas fa-fw fa-database',
-            'can'  => ['referensi'],
+            'can'  => ['referensi','role-list','role-edit','role-create','role-delete'],
             'submenu' => [
                 [
                     'text'          => 'Guru',

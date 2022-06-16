@@ -19,13 +19,13 @@ use Illuminate\Support\Arr;
 class NilaiController extends Controller
 {
 
-    function __construct()
-    {
-         $this->middleware('permission:nilai-list|nilai-create|nilai-edit|nilai-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:nilai-create', ['only' => ['create','store']]);
-         $this->middleware('permission:nilai-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:nilai-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //      $this->middleware('permission:nilai-list|nilai-create|nilai-edit|nilai-delete', ['only' => ['index','store']]);
+    //      $this->middleware('permission:nilai-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:nilai-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:nilai-delete', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of the resource.

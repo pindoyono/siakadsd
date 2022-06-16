@@ -21,13 +21,13 @@ class SiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    function __construct()
-    {
-         $this->middleware('permission:siswa-list|siswa-create|siswa-edit|siswa-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:siswa-create', ['only' => ['create','store']]);
-         $this->middleware('permission:siswa-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:siswa-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //      $this->middleware('permission:siswa-list|siswa-create|siswa-edit|siswa-delete', ['only' => ['index','store']]);
+    //      $this->middleware('permission:siswa-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:siswa-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:siswa-delete', ['only' => ['destroy']]);
+    // }
 
 
     public function index()

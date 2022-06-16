@@ -13,13 +13,13 @@ class KlasController extends Controller
      * @return \Illuminate\Http\Response
      */
      //
-     function __construct()
-    {
-     $this->middleware('permission:kelas-list|kelas-create|kelas-edit|kelas-delete', ['only' => ['index','store']]);
-     $this->middleware('permission:kelas-create', ['only' => ['create','store']]);
-     $this->middleware('permission:kelas-edit', ['only' => ['edit','update']]);
-     $this->middleware('permission:kelas-delete', ['only' => ['destroy']]);
-    }
+    //  function __construct()
+    // {
+    //  $this->middleware('permission:kelas-list|kelas-create|kelas-edit|kelas-delete', ['only' => ['index','store']]);
+    //  $this->middleware('permission:kelas-create', ['only' => ['create','store']]);
+    //  $this->middleware('permission:kelas-edit', ['only' => ['edit','update']]);
+    //  $this->middleware('permission:kelas-delete', ['only' => ['destroy']]);
+    // }
 
     public function index()
     {

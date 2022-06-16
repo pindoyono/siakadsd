@@ -20,13 +20,13 @@ class GuruController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    function __construct()
-    {
-         $this->middleware('permission:guru-list|guru-create|guru-edit|guru-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:guru-create', ['only' => ['create','store']]);
-         $this->middleware('permission:guru-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:guru-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //      $this->middleware('permission:guru-list|guru-create|guru-edit|guru-delete', ['only' => ['index','store']]);
+    //      $this->middleware('permission:guru-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:guru-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:guru-delete', ['only' => ['destroy']]);
+    // }
 
 
     public function index()

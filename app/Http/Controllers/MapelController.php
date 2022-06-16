@@ -12,13 +12,13 @@ class MapelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-     $this->middleware('permission:mapel-list|mapel-create|mapel-edit|mapel-delete', ['only' => ['index','store']]);
-     $this->middleware('permission:mapel-create', ['only' => ['create','store']]);
-     $this->middleware('permission:mapel-edit', ['only' => ['edit','update']]);
-     $this->middleware('permission:mapel-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //  $this->middleware('permission:mapel-list|mapel-create|mapel-edit|mapel-delete', ['only' => ['index','store']]);
+    //  $this->middleware('permission:mapel-create', ['only' => ['create','store']]);
+    //  $this->middleware('permission:mapel-edit', ['only' => ['edit','update']]);
+    //  $this->middleware('permission:mapel-delete', ['only' => ['destroy']]);
+    // }
 
 
     public function index()
